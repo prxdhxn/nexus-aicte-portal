@@ -1,0 +1,232 @@
+================================================================================
+           NEXUS — AICTE MODEL CURRICULUM PORTAL
+           Detailed Project Description
+           Course: INT221 - MVC Programming
+================================================================================
+
+PROJECT TITLE:
+  Nexus — A Unified Portal for Developing Model Curriculum for AICTE Approved Institutes
+
+PROJECT OVERVIEW:
+  Nexus is a full-stack web application built using the Laravel MVC framework.
+  It serves as a unified digital platform where Subject Matter Experts (SMEs)
+  appointed by AICTE can propose and publish model curricula, and registered
+  AICTE-approved institutes can view, adopt, and submit their implementation
+  plans for those curricula. The portal enforces strict role-based access to
+  ensure each actor can only perform actions relevant to their role.
+
+--------------------------------------------------------------------------------
+TECHNOLOGY STACK:
+--------------------------------------------------------------------------------
+  Backend Framework  : Laravel 11 (PHP 8.2)
+  Database           : MongoDB Atlas (Cloud, via mongodb/laravel-mongodb package)
+  Authentication     : Laravel Auth + Laravel Socialite (Google & GitHub OAuth)
+  Frontend           : Blade Templates + Bootstrap 5.3 + Font Awesome 6
+  Typography         : Google Fonts — Outfit (brand), Inter (body)
+  Storage            : Laravel local disk (for uploaded PDF/DOCX/ZIP files)
+  Server             : PHP built-in dev server (php artisan serve)
+  Architecture       : MVC (Model-View-Controller)
+
+--------------------------------------------------------------------------------
+USER ROLES:
+--------------------------------------------------------------------------------
+
+  1. ADMIN
+     - Full access to manage all portal users
+     - Can create new users with any role (Admin, SME, Institute)
+     - Can delete existing users
+     - Can view all curricula and adoptions
+     - Access: /admin/users
+
+  2. SME (Subject Matter Expert)
+     - Represents AICTE academic experts
+     - Can CREATE new model curriculum proposals
+     - Can EDIT and DELETE their own curricula
+     - Can VIEW all institute adoption submissions for their curricula
+     - Can GRADE each institute's adoption with a score (0-100) and feedback
+     - Access: /curricula, /curricula/create, /adoptions/{id}
+
+  3. INSTITUTE (AICTE Approved College/University)
+     - Can VIEW all published model curricula
+     - Can SUBMIT an adoption plan (PDF, DOCX, or ZIP file) for any curriculum
+     - Can RE-SUBMIT to update their adoption plan
+     - Can VIEW their own approval score and feedback given by the SME
+     - Cannot access admin or SME-only sections
+     - Access: /curricula, /curricula/{id} (shows their submission form)
+
+--------------------------------------------------------------------------------
+KEY FEATURES:
+--------------------------------------------------------------------------------
+
+  1. ROLE-BASED AUTHENTICATION
+     - Custom RoleMiddleware enforces permissions at the route level
+     - Three distinct roles: admin, sme, institute
+     - Unauthorised access returns HTTP 403 Forbidden
+     - Session-based login with CSRF protection on all forms
+
+  2. SOCIAL LOGIN (OAUTH)
+     - Login with Google account
+     - Login with GitHub account
+     - Social users are auto-registered with 'student' role on first login
+     - Existing users who log in via social are linked to their account
+
+  3. CURRICULUM MANAGEMENT (SME/Admin)
+     - Create new model curriculum with:
+         * Title
+         * Description
+         * Submission Deadline (date)
+     - Deadline tracking: shown in RED if past due, GREEN if upcoming
+     - Edit and delete existing curricula
+     - View list of all institutes that have submitted an adoption plan
+
+  4. CURRICULUM ADOPTION (Institute)
+     - Institutes can browse all published curricula
+     - Each curriculum shows the submission status:
+         * "Submitted" badge (green) if the institute has already submitted
+         * "Pending" badge (yellow) if not yet submitted
+     - File upload support: PDF, DOC, DOCX, ZIP (max 10 MB)
+     - Institutes warned if they try to submit after the deadline
+
+  5. GRADING & FEEDBACK (SME)
+     - SME can open any institute's adoption submission
+     - Downloads and reviews the uploaded file
+     - Assigns an Approval Score out of 100
+     - Writes detailed written feedback
+     - Institute can view their score and feedback after grading
+
+  6. ADMIN USER MANAGEMENT
+     - Admin dashboard card links to User Management
+     - View all registered users in a table
+     - Create new users (name, email, password, role)
+     - Delete any user from the system
+
+  7. ANIMATED DASHBOARD
+     - Role-aware welcome message
+     - Animated floating orb background (CSS keyframe animations)
+     - Quick-action cards based on user role
+     - Admin sees: Manage Users + Curricula cards
+     - SME/Institute sees: Curricula card
+
+  8. PREMIUM UI DESIGN (Nexus Brand)
+     - Light theme with sky-blue (#0ea5e9) accent color
+     - Split-screen login layout (form left, animated brand panel right)
+     - Glassmorphism cards with blur effects
+     - Smooth fade-up page entry animations
+     - Pill-shaped and rounded buttons
+     - Navbar with user badge showing name + role
+     - Responsive layout for all screen sizes
+
+--------------------------------------------------------------------------------
+DATABASE MODELS (MongoDB Collections):
+--------------------------------------------------------------------------------
+
+  1. users
+     Fields: name, email, password (hashed), role, provider, provider_id,
+             email_verified_at, remember_token, timestamps
+
+  2. curricula
+     Fields: title, description, deadline, sme_id (ref: users), timestamps
+
+  3. adoptions
+     Fields: user_id (ref: users), curriculum_id (ref: curricula),
+             file_path, approval_score, feedback, timestamps
+
+--------------------------------------------------------------------------------
+ROUTES SUMMARY:
+--------------------------------------------------------------------------------
+
+  PUBLIC:
+    GET  /               → Redirects to /login
+    GET  /login          → Show login form
+    POST /login          → Process login
+    POST /logout         → Logout user
+    GET  /auth/{provider}/redirect   → OAuth redirect (google/github)
+    GET  /auth/{provider}/callback   → OAuth callback
+
+  AUTHENTICATED (all roles):
+    GET  /dashboard      → Role-aware dashboard
+    GET  /curricula      → List all curricula
+    GET  /curricula/{id} → View single curriculum + adoption form/list
+
+  SME / ADMIN ONLY:
+    GET  /curricula/create         → New curriculum form
+    POST /curricula                → Save new curriculum
+    GET  /curricula/{id}/edit      → Edit curriculum form
+    PUT  /curricula/{id}           → Update curriculum
+    DELETE /curricula/{id}         → Delete curriculum
+    GET  /adoptions/{id}           → Grade adoption page
+    PUT  /adoptions/{id}           → Save grade & feedback
+    DELETE /adoptions/{id}         → Delete adoption record
+
+  INSTITUTE ONLY:
+    POST /curricula/{id}/submit    → Upload adoption plan file
+
+  ADMIN ONLY:
+    GET  /admin/users              → List all users
+    GET  /admin/users/create       → New user form
+    POST /admin/users              → Create user
+    DELETE /admin/users/{id}       → Delete user
+
+--------------------------------------------------------------------------------
+DEFAULT TEST CREDENTIALS (after seeding):
+--------------------------------------------------------------------------------
+
+  Role       | Email                    | Password
+  -----------|--------------------------|----------
+  Admin      | admin@example.com        | password
+  SME        | sme@example.com          | password
+  Institute  | institute@example.com    | password
+
+  Run seeder: php artisan db:seed
+
+--------------------------------------------------------------------------------
+HOW TO RUN THE PROJECT:
+--------------------------------------------------------------------------------
+
+  1. Navigate to project folder:
+       cd portal
+
+  2. Install dependencies (if not done):
+       composer install
+
+  3. Copy environment file:
+       cp .env.example .env
+       php artisan key:generate
+
+  4. Configure MongoDB in .env:
+       DB_CONNECTION=mongodb
+       DB_URI="mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/?appName=assignment"
+       DB_DATABASE=assignment
+
+  5. Seed the database:
+       php artisan db:seed
+
+  6. Link storage (for file downloads):
+       php artisan storage:link
+
+  7. Start the server:
+       php artisan serve
+
+  8. Open browser:
+       http://127.0.0.1:8000
+
+--------------------------------------------------------------------------------
+LEARNING OUTCOMES DEMONSTRATED:
+--------------------------------------------------------------------------------
+
+  - MVC Architecture: Models (Eloquent/MongoDB), Views (Blade), Controllers
+  - Authentication: Session-based login, password hashing, remember me
+  - OAuth Integration: Third-party login via Laravel Socialite
+  - Middleware: Custom RoleMiddleware for authorization
+  - File Uploads: Validation, storage, and retrieval
+  - Resource Controllers: RESTful CRUD operations
+  - Database Relationships: hasMany, belongsTo across MongoDB collections
+  - Form Validation: Server-side with error display
+  - CSRF Protection: On all POST/PUT/DELETE forms
+  - Blade Templating: Layouts, sections, components, conditionals
+  - Cloud Database: MongoDB Atlas with Mongoose-style driver
+
+================================================================================
+                    Developed for INT221 - MVC Programming
+                         Submitted: April 2026
+================================================================================
