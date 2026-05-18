@@ -398,7 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                obs.unobserve(entry.target);
+            } else {
+                entry.target.classList.remove('active');
             }
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
