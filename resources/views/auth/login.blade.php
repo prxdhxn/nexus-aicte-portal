@@ -261,8 +261,8 @@
             <div class="brand-name">Nexus</div>
         </a>
 
-        <h1 class="form-title">Welcome back</h1>
-        <p class="form-subtitle">New here? <a href="{{ route('register') }}">Create an account →</a></p>
+        <h1 class="form-title">{{ __('messages.login_welcome_back') }}</h1>
+        <p class="form-subtitle">{{ __('messages.login_new_here') }} <a href="{{ route('register') }}">{{ __('messages.login_create_account') }}</a></p>
 
         @if($errors->any())
         <div class="error-banner">
@@ -283,19 +283,19 @@
             </a>
         </div>
 
-        <div class="divider">or email & password</div>
+        <div class="divider">{{ __('messages.login_or_email') }}</div>
 
         <form method="POST" action="{{ route('login') }}" id="loginForm">
             @csrf
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">{{ __('messages.login_email') }}</label>
                 <div class="field-wrap">
                     <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" placeholder="you@institution.edu" required autofocus>
+                        value="{{ old('email') }}" placeholder="{{ __('messages.login_email_ph') }}" required autofocus>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">{{ __('messages.login_password') }}</label>
                 <div class="field-wrap">
                     <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required style="padding-right:42px;">
                     <button type="button" class="eye-btn" onclick="togglePwd()">
@@ -305,13 +305,13 @@
             </div>
 
             <button type="submit" class="btn-login" id="loginBtn">
-                <span><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In</span>
+                <span><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>{{ __('messages.login_sign_in_btn') }}</span>
             </button>
         </form>
 
         {{-- Demo Accounts --}}
         <div class="demo-box mt-4">
-            <div class="demo-title"><i class="fa-solid fa-flask me-1"></i>Demo Accounts — password: <code>password</code></div>
+            <div class="demo-title"><i class="fa-solid fa-flask me-1"></i>{{ __('messages.login_demo') }} <code>password</code></div>
             <div class="demo-btns">
                 <button class="demo-pill" onclick="fillDemo('admin@example.com')">
                     <i class="fa-solid fa-shield-halved"></i> Admin
@@ -337,40 +337,40 @@
 
         <div class="hero-content">
             <div class="hero-badge">
-                <span>Live Platform</span>
+                <span>{{ __('messages.login_live_platform') }}</span>
             </div>
 
             <h2 class="hero-title">
-                India's Unified<br>
-                <span class="gradient-word">AICTE Curriculum</span><br>
-                Network
+                {{ __('messages.login_hero_title_1') }}<br>
+                <span class="gradient-word">{{ __('messages.login_hero_title_2') }}</span><br>
+                {{ __('messages.login_hero_title_3') }}
             </h2>
 
             <p class="hero-desc">
-                A single portal where AICTE-approved institutes discover, adopt, and get scored on model curricula crafted by India's leading Subject Matter Experts.
+                {{ __('messages.login_hero_desc') }}
             </p>
 
             <div class="stats-row">
                 <div class="stat-card">
                     <div class="stat-num blue" id="cnt-curricula">0</div>
-                    <div class="stat-lbl">Curricula</div>
+                    <div class="stat-lbl">{{ __('messages.stat_curricula') }}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-num green" id="cnt-institutes">0</div>
-                    <div class="stat-lbl">Institutes</div>
+                    <div class="stat-lbl">{{ __('messages.stat_institutes') }}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-num purple" id="cnt-adoptions">0</div>
-                    <div class="stat-lbl">Adoptions</div>
+                    <div class="stat-lbl">{{ __('messages.stat_adoptions') }}</div>
                 </div>
             </div>
 
             <div class="feature-pills">
-                <span class="pill"><i class="fa-solid fa-book-open-reader"></i>Model Curricula</span>
-                <span class="pill"><i class="fa-solid fa-star"></i>SME Grading</span>
-                <span class="pill"><i class="fa-solid fa-bell"></i>Real-time Alerts</span>
-                <span class="pill"><i class="fa-solid fa-chart-line"></i>Analytics</span>
-                <span class="pill"><i class="fa-brands fa-google"></i>OAuth Login</span>
+                <span class="pill"><i class="fa-solid fa-book-open-reader"></i>{{ __('messages.pill_model_curricula') }}</span>
+                <span class="pill"><i class="fa-solid fa-star"></i>{{ __('messages.pill_sme_grading') }}</span>
+                <span class="pill"><i class="fa-solid fa-bell"></i>{{ __('messages.pill_realtime_alerts') }}</span>
+                <span class="pill"><i class="fa-solid fa-chart-line"></i>{{ __('messages.pill_analytics') }}</span>
+                <span class="pill"><i class="fa-brands fa-google"></i>{{ __('messages.pill_oauth_login') }}</span>
             </div>
         </div>
 
@@ -463,7 +463,7 @@ window.addEventListener('load', () => {
 /* ── Login button loading state ── */
 document.getElementById('loginForm').addEventListener('submit', function() {
     const btn = document.getElementById('loginBtn');
-    btn.innerHTML = '<span><i class="fa-solid fa-spinner fa-spin me-2"></i>Authenticating…</span>';
+    btn.innerHTML = '<span><i class="fa-solid fa-spinner fa-spin me-2"></i>{{ __("messages.login_authenticating") }}</span>';
     btn.disabled = true;
 });
 </script>

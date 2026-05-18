@@ -43,12 +43,14 @@ use App\Http\Controllers\SocialAuthController;
 Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
 Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
+// Preferences (Publicly accessible for language switcher on welcome/login pages)
+Route::post('/preferences/language', [\App\Http\Controllers\PreferenceController::class, 'switchLanguage'])->name('preferences.language');
+
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
 
-    // Preferences
+    // View Mode (Authenticated only)
     Route::post('/preferences/view-mode', [\App\Http\Controllers\PreferenceController::class, 'toggleViewMode'])->name('preferences.toggle');
-    Route::post('/preferences/language', [\App\Http\Controllers\PreferenceController::class, 'switchLanguage'])->name('preferences.language');
 
     // Dashboard with stats
     Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('admin.dashboard');

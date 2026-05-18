@@ -219,11 +219,11 @@
         Nexus
     </a>
     <div class="nav-links">
+        <a href="#features" class="nav-link">{{ __('messages.features') }}</a>
+        <a href="#roles" class="nav-link">{{ __('messages.roles') }}</a>
         @include('partials.translator')
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#roles" class="nav-link">Roles</a>
-        <a href="{{ route('login') }}" class="nav-btn nav-btn-outline">Sign In</a>
-        <a href="{{ route('register') }}" class="nav-btn nav-btn-fill">Get Started</a>
+        <a href="{{ route('login') }}" class="nav-btn nav-btn-outline">{{ __('messages.sign_in') }}</a>
+        <a href="{{ route('register') }}" class="nav-btn nav-btn-fill">{{ __('messages.get_started') }}</a>
     </div>
 </nav>
 
@@ -236,17 +236,17 @@
         <div class="hero-eyebrow"><span class="dot"></span> AICTE Approved · INT221 Project</div>
 
         <h1 class="hero-title">
-            One Portal for<br>
-            <span class="line2">India's Model Curricula</span>
+            {{ __('messages.hero_title_1') }}<br>
+            <span class="line2">{{ __('messages.hero_title_2') }}</span>
         </h1>
-        <p class="hero-desc">Nexus connects AICTE-approved institutes with expert-crafted model curricula. Adopt, submit, and get scored — all in one place.</p>
+        <p class="hero-desc">{{ __('messages.hero_desc') }}</p>
 
         <div class="hero-cta">
             <a href="{{ route('register') }}" class="cta-primary">
-                <i class="fa-solid fa-rocket"></i> Start for Free
+                <i class="fa-solid fa-rocket"></i> {{ __('messages.start_for_free') }}
             </a>
             <a href="{{ route('login') }}" class="cta-secondary">
-                <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> {{ __('messages.sign_in') }}
             </a>
         </div>
 
@@ -269,18 +269,18 @@
 
 {{-- FEATURES --}}
 <section class="features" id="features">
-    <div class="section-label">What's Inside</div>
-    <h2 class="section-title">Everything you need</h2>
-    <p class="section-desc">From curriculum creation to adoption tracking — every workflow is covered.</p>
+    <div class="section-label">{{ __('messages.feat_label') }}</div>
+    <h2 class="section-title">{{ __('messages.feat_title') }}</h2>
+    <p class="section-desc">{{ __('messages.feat_desc') }}</p>
 
     <div class="features-grid">
         @php $feats = [
-            ['bg'=>'rgba(14,165,233,0.15)','color'=>'#38bdf8','icon'=>'fa-book-open-reader','title'=>'Model Curricula','desc'=>'Browse AICTE-standardized curricula across disciplines, created by certified Subject Matter Experts.'],
-            ['bg'=>'rgba(16,185,129,0.15)','color'=>'#34d399','icon'=>'fa-file-arrow-up','title'=>'One-Click Adoption','desc'=>'Upload your implementation plan with drag-and-drop. PDF, DOC, DOCX & ZIP supported up to 10MB.'],
-            ['bg'=>'rgba(99,102,241,0.15)','color'=>'#818cf8','icon'=>'fa-star-half-stroke','title'=>'SME Grading','desc'=>'Subject Matter Experts review and score each adoption on a 100-point scale with written feedback.'],
-            ['bg'=>'rgba(245,158,11,0.15)','color'=>'#fbbf24','icon'=>'fa-bell','title'=>'Real-time Alerts','desc'=>'Instant in-app notifications when curricula are published or your submission is graded.'],
-            ['bg'=>'rgba(139,92,246,0.15)','color'=>'#a78bfa','icon'=>'fa-chart-line','title'=>'Analytics Dashboard','desc'=>'Admins track platform-wide adoption trends, score distributions, and institute engagement.'],
-            ['bg'=>'rgba(244,114,182,0.15)','color'=>'#f472b6','icon'=>'fa-shield-halved','title'=>'Role-Based Security','desc'=>'Three distinct roles — Admin, SME, Institute — each with tightly scoped permissions and middleware.'],
+            ['bg'=>'rgba(14,165,233,0.15)','color'=>'#38bdf8','icon'=>'fa-book-open-reader','title'=>__('messages.feat_1_title'),'desc'=>__('messages.feat_1_desc')],
+            ['bg'=>'rgba(16,185,129,0.15)','color'=>'#34d399','icon'=>'fa-file-arrow-up','title'=>__('messages.feat_2_title'),'desc'=>__('messages.feat_2_desc')],
+            ['bg'=>'rgba(99,102,241,0.15)','color'=>'#818cf8','icon'=>'fa-star-half-stroke','title'=>__('messages.feat_3_title'),'desc'=>__('messages.feat_3_desc')],
+            ['bg'=>'rgba(245,158,11,0.15)','color'=>'#fbbf24','icon'=>'fa-bell','title'=>__('messages.feat_4_title'),'desc'=>__('messages.feat_4_desc')],
+            ['bg'=>'rgba(139,92,246,0.15)','color'=>'#a78bfa','icon'=>'fa-chart-line','title'=>__('messages.feat_5_title'),'desc'=>__('messages.feat_5_desc')],
+            ['bg'=>'rgba(244,114,182,0.15)','color'=>'#f472b6','icon'=>'fa-shield-halved','title'=>__('messages.feat_6_title'),'desc'=>__('messages.feat_6_desc')],
         ]; @endphp
         @foreach($feats as $f)
         <div class="feat-card">
@@ -294,37 +294,37 @@
 
 {{-- ROLES --}}
 <section class="roles-section" id="roles">
-    <div class="section-label">Who Uses Nexus</div>
-    <h2 class="section-title">Built for every role</h2>
-    <p class="section-desc">Three distinct roles, one unified portal.</p>
+    <div class="section-label">{{ __('messages.role_label') }}</div>
+    <h2 class="section-title">{{ __('messages.role_title') }}</h2>
+    <p class="section-desc">{{ __('messages.role_desc') }}</p>
     <div class="roles-grid">
         <div class="role-card admin">
             <div class="role-icon">🛡️</div>
-            <h3>Administrator</h3>
-            <p>Full platform control — manage users, view analytics, oversee all curricula and adoptions across every institute.</p>
-            <span class="role-tag tag-admin">Full Access</span>
+            <h3>{{ __('messages.role_1_title') }}</h3>
+            <p>{{ __('messages.role_1_desc') }}</p>
+            <span class="role-tag tag-admin">{{ __('messages.role_1_tag') }}</span>
         </div>
         <div class="role-card sme">
             <div class="role-icon">🎓</div>
-            <h3>Subject Matter Expert</h3>
-            <p>Create and publish model curricula, review institute submissions, and provide scored feedback and guidance.</p>
-            <span class="role-tag tag-sme">Creator & Reviewer</span>
+            <h3>{{ __('messages.role_2_title') }}</h3>
+            <p>{{ __('messages.role_2_desc') }}</p>
+            <span class="role-tag tag-sme">{{ __('messages.role_2_tag') }}</span>
         </div>
         <div class="role-card inst">
             <div class="role-icon">🏛️</div>
-            <h3>Institute</h3>
-            <p>Discover curricula, submit your adoption plan, track your scores, and engage in the discussion forum.</p>
-            <span class="role-tag tag-inst">Adopter</span>
+            <h3>{{ __('messages.role_3_title') }}</h3>
+            <p>{{ __('messages.role_3_desc') }}</p>
+            <span class="role-tag tag-inst">{{ __('messages.role_3_tag') }}</span>
         </div>
     </div>
 </section>
 
 {{-- CTA BANNER --}}
 <div class="cta-banner">
-    <h2>Ready to join the network?</h2>
-    <p>Create your free institute account and start adopting AICTE model curricula today.</p>
+    <h2>{{ __('messages.cta_title') }}</h2>
+    <p>{{ __('messages.cta_desc') }}</p>
     <a href="{{ route('register') }}" class="cta-white">
-        <i class="fa-solid fa-rocket"></i> Create Free Account
+        <i class="fa-solid fa-rocket"></i> {{ __('messages.cta_btn') }}
     </a>
 </div>
 

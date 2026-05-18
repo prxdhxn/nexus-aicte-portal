@@ -315,17 +315,17 @@
                             $dashRoute = auth()->user()->role === 'admin' ? 'admin.dashboard' : (auth()->user()->role === 'sme' ? 'sme.dashboard' : 'institute.dashboard');
                         @endphp
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route($dashRoute) }}"><i class="fa-solid fa-layer-group"></i>Dashboard</a>
+                            <a class="nav-link" href="{{ route($dashRoute) }}"><i class="fa-solid fa-layer-group"></i>{{ __('messages.nav_dashboard') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('curricula.index') }}"><i class="fa-solid fa-book-open-reader"></i>Curricula</a>
+                            <a class="nav-link" href="{{ route('curricula.index') }}"><i class="fa-solid fa-book-open-reader"></i>{{ __('messages.nav_curricula') }}</a>
                         </li>
                         @if(auth()->user()->role === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.analytics') }}"><i class="fa-solid fa-chart-line"></i>Analytics</a>
+                                <a class="nav-link" href="{{ route('admin.analytics') }}"><i class="fa-solid fa-chart-line"></i>{{ __('messages.nav_analytics') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fa-solid fa-users"></i>Users</a>
+                                <a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fa-solid fa-users"></i>{{ __('messages.nav_users') }}</a>
                             </li>
                         @endif
 
@@ -374,7 +374,7 @@
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="logout-btn">
-                                    <i class="fa-solid fa-right-from-bracket text-danger me-1"></i>Logout
+                                    <i class="fa-solid fa-right-from-bracket text-danger me-1"></i>{{ __('messages.nav_logout') }}
                                 </button>
                             </form>
                         </li>
@@ -399,10 +399,10 @@
             </small>
             <div class="d-flex align-items-center gap-3">
                 <a href="{{ url('/help') }}" style="color:var(--text-muted);font-size:0.82rem;text-decoration:none;" class="footer-link">
-                    <i class="fa-solid fa-circle-question me-1"></i>Help
+                    <i class="fa-solid fa-circle-question me-1"></i>{{ __('messages.nav_help') }}
                 </a>
                 <a href="{{ route('login') }}" style="color:var(--text-muted);font-size:0.82rem;text-decoration:none;" class="footer-link">
-                    <i class="fa-solid fa-right-to-bracket me-1"></i>Login
+                    <i class="fa-solid fa-right-to-bracket me-1"></i>{{ __('messages.nav_login') }}
                 </a>
                 <span style="color:var(--border-color);">|</span>
                 <small style="color:var(--text-muted);font-size:0.75rem;">v1.0.0</small>

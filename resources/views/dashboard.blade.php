@@ -243,9 +243,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4 fade-up">
     <div>
         <h2 class="fw-bold mb-1" style="font-family:'Outfit',sans-serif;">
-            👋 {{ __('dashboard.welcome_back') }}, {{ auth()->user()->name }}!
+            👋 {{ __('messages.welcome_back') }}, {{ auth()->user()->name }}!
         </h2>
-        <p class="text-muted mb-0" style="font-size:0.9rem;">{{ __('dashboard.overview') }}</p>
+        <p class="text-muted mb-0" style="font-size:0.9rem;">{{ __('messages.overview') }}</p>
     </div>
     <span class="badge" style="background:var(--accent-glow);color:var(--accent-color);font-size:0.8rem;padding:8px 14px;border-radius:20px;border:1px solid var(--accent-color);">
         <i class="fa-solid fa-circle-dot me-1" style="font-size:0.6rem;"></i>{{ ucfirst(auth()->user()->role) }}
@@ -259,7 +259,7 @@
             <div class="stat-icon blue"><i class="fa-solid fa-book-open"></i></div>
             <div>
                 <div class="stat-number" id="stat-curricula" data-target="0">...</div>
-                <div class="stat-label">{{ __('dashboard.total_curricula') }}</div>
+                <div class="stat-label">{{ __('messages.total_curricula') }}</div>
             </div>
         </div>
     </div>
@@ -268,7 +268,7 @@
             <div class="stat-icon green"><i class="fa-solid fa-file-circle-check"></i></div>
             <div>
                 <div class="stat-number" id="stat-submissions" data-target="0">...</div>
-                <div class="stat-label" id="stat-submissions-label">{{ __('dashboard.submissions') }}</div>
+                <div class="stat-label" id="stat-submissions-label">{{ __('messages.submissions') }}</div>
             </div>
         </div>
     </div>
@@ -277,7 +277,7 @@
             <div class="stat-icon orange"><i class="fa-solid fa-star-half-stroke"></i></div>
             <div>
                 <div class="stat-number" id="stat-score" data-target="0" data-suffix="/100">...</div>
-                <div class="stat-label" id="stat-score-label">{{ __('dashboard.avg_score') }}</div>
+                <div class="stat-label" id="stat-score-label">{{ __('messages.avg_score') }}</div>
             </div>
         </div>
     </div>
@@ -286,7 +286,7 @@
             <div class="stat-icon purple"><i class="fa-solid fa-calendar-days"></i></div>
             <div>
                 <div class="stat-number" id="stat-deadlines" data-target="0">...</div>
-                <div class="stat-label">{{ __('dashboard.due_week') }}</div>
+                <div class="stat-label">{{ __('messages.due_week') }}</div>
             </div>
         </div>
     </div>
@@ -323,7 +323,7 @@
     <div class="col-lg-5 fade-up">
         <div class="card h-100">
             <div class="card-header">
-                <i class="fa-solid fa-timeline me-2" style="color:var(--accent-color)"></i>{{ __('dashboard.recent_activity') }}
+                <i class="fa-solid fa-timeline me-2" style="color:var(--accent-color)"></i>{{ __('messages.recent_activity') }}
                 @if(auth()->user()->role === 'admin')
                     <small class="text-muted ms-2" style="font-weight:400;">(All users)</small>
                 @endif

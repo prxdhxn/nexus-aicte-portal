@@ -25,7 +25,7 @@ class PreferenceController extends Controller
 
     public function switchLanguage(Request $request)
     {
-        $request->validate(['lang' => 'required|in:en,hi']);
+        $request->validate(['lang' => 'required|in:en,hi,ta,fr,es']);
         session(['app_locale' => $request->lang]);
         return back();
     }

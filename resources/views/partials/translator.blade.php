@@ -1,61 +1,44 @@
-<div id="google_translate_element" style="position:absolute; top:-10000px; left:-10000px; width:1px; height:1px; overflow:hidden;"></div>
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,hi,ta,fr,es'}, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script>
-function doGTranslate(lang_pair) {
-    if(lang_pair.value) lang_pair = lang_pair.value;
-    if(lang_pair == '') return;
-    var lang = lang_pair.split('|')[1];
-    
-    var teCombo = document.querySelector('.goog-te-combo');
-    if (!teCombo) {
-        // If the widget isn't loaded yet, try again in 500ms
-        setTimeout(function() { doGTranslate(lang_pair); }, 500);
-        return;
-    }
-    
-    // Hide the custom dropdown menu
-    var menu = document.getElementById('translatorMenu');
-    if(menu) menu.classList.remove('show');
-
-    // Trigger translation
-    teCombo.value = lang;
-    if (typeof(document.createEvent) == 'function') {
-        var evt = document.createEvent('HTMLEvents');
-        evt.initEvent('change', true, true);
-        teCombo.dispatchEvent(evt);
-    } else {
-        var evt = document.createEventObject();
-        teCombo.fireEvent('onchange', evt);
-    }
-}
-</script>
-
-<style>
-/* Hide the Google Translate toolbar and tooltips */
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0px !important; }
-.goog-tooltip { display: none !important; }
-.goog-tooltip:hover { display: none !important; }
-.goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
-</style>
-
 <!-- Custom Translator Dropdown -->
 <div class="custom-translator-wrapper" id="customTranslatorWrapper">
   <button class="translator-btn" type="button" id="translatorDropdownBtn" title="Translate Page">
     <i class="fa-solid fa-language"></i>
   </button>
   <ul class="translator-menu" id="translatorMenu">
-    <li><a class="t-item" href="#" onclick="doGTranslate('en|en'); return false;">🇬🇧 English</a></li>
-    <li><a class="t-item" href="#" onclick="doGTranslate('en|hi'); return false;">🇮🇳 Hindi (हिंदी)</a></li>
-    <li><a class="t-item" href="#" onclick="doGTranslate('en|ta'); return false;">🇮🇳 Tamil (தமிழ்)</a></li>
-    <li><a class="t-item" href="#" onclick="doGTranslate('en|fr'); return false;">🇫🇷 French (Français)</a></li>
-    <li><a class="t-item" href="#" onclick="doGTranslate('en|es'); return false;">🇪🇸 Spanish (Español)</a></li>
+    <li>
+        <form action="{{ route('preferences.language') }}" method="POST">
+            @csrf
+            <input type="hidden" name="lang" value="en">
+            <button type="submit" class="t-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">🇬🇧 English</button>
+        </form>
+    </li>
+    <li>
+        <form action="{{ route('preferences.language') }}" method="POST">
+            @csrf
+            <input type="hidden" name="lang" value="hi">
+            <button type="submit" class="t-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">🇮🇳 Hindi (हिंदी)</button>
+        </form>
+    </li>
+    <li>
+        <form action="{{ route('preferences.language') }}" method="POST">
+            @csrf
+            <input type="hidden" name="lang" value="ta">
+            <button type="submit" class="t-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">🇮🇳 Tamil (தமிழ்)</button>
+        </form>
+    </li>
+    <li>
+        <form action="{{ route('preferences.language') }}" method="POST">
+            @csrf
+            <input type="hidden" name="lang" value="fr">
+            <button type="submit" class="t-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">🇫🇷 French (Français)</button>
+        </form>
+    </li>
+    <li>
+        <form action="{{ route('preferences.language') }}" method="POST">
+            @csrf
+            <input type="hidden" name="lang" value="es">
+            <button type="submit" class="t-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">🇪🇸 Spanish (Español)</button>
+        </form>
+    </li>
   </ul>
 </div>
 
@@ -121,9 +104,10 @@ body { top: 0px !important; }
     display: block;
     text-decoration: none;
     transition: all 0.2s ease;
+    outline: none;
 }
-.t-item:hover {
-    background: rgba(14, 165, 233, 0.2);
+.t-item:hover, .t-item:focus {
+    background: rgba(14, 165, 233, 0.2) !important;
     color: #38bdf8;
     text-decoration: none;
 }
