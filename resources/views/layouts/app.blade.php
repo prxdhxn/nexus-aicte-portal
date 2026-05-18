@@ -268,15 +268,19 @@
         .badge { padding: 5px 10px; border-radius: 8px; font-weight: 600; }
 
         /* ═══ ANIMATIONS ═══ */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.5s ease;
         }
-        .fade-up { animation: fadeUp 0.5s ease forwards; }
-        .fade-up-delay-1 { animation-delay: 0.05s; opacity: 0; }
-        .fade-up-delay-2 { animation-delay: 0.1s; opacity: 0; }
-        .fade-up-delay-3 { animation-delay: 0.15s; opacity: 0; }
-        .fade-up-delay-4 { animation-delay: 0.2s; opacity: 0; }
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-up-delay-1 { transition-delay: 0.05s; }
+        .fade-up-delay-2 { transition-delay: 0.1s; }
+        .fade-up-delay-3 { transition-delay: 0.15s; }
+        .fade-up-delay-4 { transition-delay: 0.2s; }
 
         /* ═══ LOGOUT BTN ═══ */
         .logout-btn {
@@ -518,6 +522,21 @@
 
         // Poll notifications every 60 seconds
         @auth fetchNotifications(); setInterval(fetchNotifications, 60000); @endauth
+
+        // ═══ SCROLL ANIMATION ═══
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+            
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
