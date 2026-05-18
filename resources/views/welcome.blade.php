@@ -206,6 +206,23 @@
             .cta-banner { margin: 0 20px 60px; padding: 50px 24px; }
             footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
         }
+
+        /* ── SCROLL REVEAL ─────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -269,9 +286,9 @@
 
 {{-- FEATURES --}}
 <section class="features" id="features">
-    <div class="section-label">{{ __('messages.feat_label') }}</div>
-    <h2 class="section-title">{{ __('messages.feat_title') }}</h2>
-    <p class="section-desc">{{ __('messages.feat_desc') }}</p>
+    <div class="section-label reveal">{{ __('messages.feat_label') }}</div>
+    <h2 class="section-title reveal delay-1">{{ __('messages.feat_title') }}</h2>
+    <p class="section-desc reveal delay-2">{{ __('messages.feat_desc') }}</p>
 
     <div class="features-grid">
         @php $feats = [
@@ -282,8 +299,8 @@
             ['bg'=>'rgba(139,92,246,0.15)','color'=>'#a78bfa','icon'=>'fa-chart-line','title'=>__('messages.feat_5_title'),'desc'=>__('messages.feat_5_desc')],
             ['bg'=>'rgba(244,114,182,0.15)','color'=>'#f472b6','icon'=>'fa-shield-halved','title'=>__('messages.feat_6_title'),'desc'=>__('messages.feat_6_desc')],
         ]; @endphp
-        @foreach($feats as $f)
-        <div class="feat-card">
+        @foreach($feats as $index => $f)
+        <div class="feat-card reveal delay-{{ $index + 1 }}">
             <div class="feat-icon" style="background:{{ $f['bg'] }};color:{{ $f['color'] }};"><i class="fa-solid {{ $f['icon'] }}"></i></div>
             <h3>{{ $f['title'] }}</h3>
             <p>{{ $f['desc'] }}</p>
@@ -294,23 +311,23 @@
 
 {{-- ROLES --}}
 <section class="roles-section" id="roles">
-    <div class="section-label">{{ __('messages.role_label') }}</div>
-    <h2 class="section-title">{{ __('messages.role_title') }}</h2>
-    <p class="section-desc">{{ __('messages.role_desc') }}</p>
+    <div class="section-label reveal">{{ __('messages.role_label') }}</div>
+    <h2 class="section-title reveal delay-1">{{ __('messages.role_title') }}</h2>
+    <p class="section-desc reveal delay-2">{{ __('messages.role_desc') }}</p>
     <div class="roles-grid">
-        <div class="role-card admin">
+        <div class="role-card admin reveal delay-1">
             <div class="role-icon">🛡️</div>
             <h3>{{ __('messages.role_1_title') }}</h3>
             <p>{{ __('messages.role_1_desc') }}</p>
             <span class="role-tag tag-admin">{{ __('messages.role_1_tag') }}</span>
         </div>
-        <div class="role-card sme">
+        <div class="role-card sme reveal delay-2">
             <div class="role-icon">🎓</div>
             <h3>{{ __('messages.role_2_title') }}</h3>
             <p>{{ __('messages.role_2_desc') }}</p>
             <span class="role-tag tag-sme">{{ __('messages.role_2_tag') }}</span>
         </div>
-        <div class="role-card inst">
+        <div class="role-card inst reveal delay-3">
             <div class="role-icon">🏛️</div>
             <h3>{{ __('messages.role_3_title') }}</h3>
             <p>{{ __('messages.role_3_desc') }}</p>
@@ -320,7 +337,7 @@
 </section>
 
 {{-- CTA BANNER --}}
-<div class="cta-banner">
+<div class="cta-banner reveal">
     <h2>{{ __('messages.cta_title') }}</h2>
     <p>{{ __('messages.cta_desc') }}</p>
     <a href="{{ route('register') }}" class="cta-white">
@@ -373,6 +390,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 /* Nav shadow on scroll */
 window.addEventListener('scroll', () => {
     document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 8px 32px rgba(0,0,0,0.4)' : '';
+});
+
+/* Scroll Reveal using IntersectionObserver */
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 </script>
 </body>
