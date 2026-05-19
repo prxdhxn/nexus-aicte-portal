@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "framework": null,
+    "framework": "laravel",
     "outputDirectory": "public",
     "functions": {
         "api/index.php": {
