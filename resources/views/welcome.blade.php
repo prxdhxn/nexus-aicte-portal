@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Apply theme immediately to prevent flash
+        const savedTheme = localStorage.getItem('nexus-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
     <title>Nexus — AICTE Curriculum Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -223,6 +228,46 @@
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
         .delay-6 { transition-delay: 0.6s; }
+
+        /* ── THEME TOGGLE & LIGHT MODE OVERRIDES ── */
+        .dark-toggle {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ffffff;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 1rem;
+            margin-left: 6px;
+        }
+        .dark-toggle:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+
+        [data-theme="light"] body { background: #f8fafc; color: #0f172a; }
+        [data-theme="light"] nav { background: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(0,0,0,0.06); }
+        [data-theme="light"] .nav-brand, [data-theme="light"] .nav-brand-icon { color: #0ea5e9; }
+        [data-theme="light"] .nav-link { color: #475569; }
+        [data-theme="light"] .nav-link:hover { color: #0ea5e9; background: rgba(14,165,233,0.06); }
+        [data-theme="light"] .nav-btn-outline { border-color: rgba(14,165,233,0.4); color: #0ea5e9; }
+        [data-theme="light"] .nav-btn-outline:hover { background: rgba(14,165,233,0.06); color: #0ea5e9; }
+        [data-theme="light"] .dark-toggle { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); color: #0f172a; }
+        [data-theme="light"] .dark-toggle:hover { background: rgba(0,0,0,0.1); }
+        [data-theme="light"] .hero-desc { color: #475569; }
+        [data-theme="light"] .cta-secondary { border-color: rgba(0,0,0,0.2); color: #0f172a; }
+        [data-theme="light"] .cta-secondary:hover { background: rgba(0,0,0,0.05); color: #0f172a; }
+        [data-theme="light"] .stat-pill { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        [data-theme="light"] .stat-val { color: #0f172a; }
+        [data-theme="light"] .stat-label { color: #64748b; }
+        [data-theme="light"] .section-title { color: #0f172a; }
+        [data-theme="light"] .section-desc { color: #475569; }
+        [data-theme="light"] .feat-card { background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        [data-theme="light"] .feat-card h3 { color: #0f172a; }
+        [data-theme="light"] .feat-card p { color: #475569; }
+        [data-theme="light"] .role-card { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.05); box-shadow: 0 15px 35px rgba(0,0,0,0.03); }
+        [data-theme="light"] .role-card h3 { color: #0f172a; }
+        [data-theme="light"] .role-card p { color: #475569; }
+        [data-theme="light"] footer { border-top-color: rgba(0,0,0,0.05); color: #64748b; }
     </style>
 </head>
 <body>
@@ -241,6 +286,9 @@
         @include('partials.translator')
         <a href="{{ route('login') }}" class="nav-btn nav-btn-outline">{{ __('messages.sign_in') }}</a>
         <a href="{{ route('register') }}" class="nav-btn nav-btn-fill">{{ __('messages.get_started') }}</a>
+        <button onclick="toggleTheme()" class="dark-toggle" id="themeIcon" title="Toggle Light/Dark Theme">
+            <i class="fa-solid fa-sun"></i>
+        </button>
     </div>
 </nav>
 
@@ -407,5 +455,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 </script>
+
+<script>
+    // Theme Toggling Logic
+    const htmlEl = document.documentElement;
+    const themeIcon = document.getElementById('themeIcon');
+    
+    function updateThemeIcon(theme) {
+        if (themeIcon) {
+            themeIcon.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        }
+    }
+    
+    // Initial icon state
+    updateThemeIcon(htmlEl.getAttribute('data-theme'));
+
+    function toggleTheme() {
+        const currentTheme = htmlEl.getAttribute('data-theme');
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlEl.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('nexus-theme', nextTheme);
+        updateThemeIcon(nextTheme);
+    }
+</script>
+
 </body>
 </html>
