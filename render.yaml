@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: nexus-aicte-portal
+    env: docker
+    region: ohio
+    plan: free
+    dockerCommand: "apache2-foreground"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        # Render provides a standard render URL, we'll let it use relative URLs or the provided Render URL if needed
+        sync: false
+      - key: DB_CONNECTION
+        value: mongodb
+      - key: DB_DATABASE
+        value: assignment
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
